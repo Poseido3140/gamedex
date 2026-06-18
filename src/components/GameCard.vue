@@ -1,24 +1,33 @@
 <script setup>
+import { computed } from 'vue';
+import { router } from '../router';
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const scoreMin = computed(() => route.query.scoreMin || 0)
+
 
 defineProps({
   jeu: { type:Object, required: true}
 })
-
-const emit = defineEmits('favori')
-
 </script>
 
 <template>
-  <div class="carte">
-      <img :src="jeu.image" :alt="jeu.nom" />
-      <h2>{{ jeu.nom }}</h2>
-      <p :class="{green: jeu.note >= 90, orange: jeu.note < 90 }">Note : {{ jeu.note }}/100</p>
-      <button @click="emit('favori',jeu)">Favori</button>
-      <p v-if="jeu.note >= 95">Hit</p>
-    </div>
+  <div v-if="scoreMin <= jeu.metacritic">
+     <router-link :to="`/jeu/${jeu.id}`">
+    <div class="carte">
+        <img :src="jeu.background_image" :alt="jeu.name" />
+        <h2>{{ jeu.name }}</h2>
+        <p :class="{green: jeu.metacritic >= 90, orange: jeu.metacritic < 90 }">Note : {{ jeu.metacritic }}/100</p>
+        <p v-if="jeu.metacritic >= 95" class="hit">Hit</p>
+      </div>
+    </router-link>
+  </div>
+
 </template>
 
 <style scoped>
+.hit {color: red;}
 .green {color: green;}
 .orange {color: orange;}
 .carte { border: 1px solid #ddd; border-radius: 12px; padding: 1rem; }
