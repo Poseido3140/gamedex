@@ -4,8 +4,9 @@ import { useRoute, useRouter } from 'vue-router'
 import {ref , onMounted, toRaw, computed, watch} from 'vue'
 import GameCard from '../components/GameCard.vue';
 import { getGames, searchGame } from '../services/rawg.js';
+import { useFavorisStore } from '../stores/favoris';
 
-
+const store = useFavorisStore()
 const router = useRouter()
 const route = useRoute()
 const jeux = ref([])
@@ -75,23 +76,19 @@ async function showSearchedGame() {
 
 <template>
   <div>
-    <input v-model.trim="search" maxlength="20" placeholder="search">
-
-    <div>
-      <label >Minimal score :</label>
-      <input type="number" v-model="scoreMin" min="0" max="100" value=""></input>
-    </div>
-
+    <RouterLink to="/favoris">
+      <p>{{ store.nombre }}</p>
+    </RouterLink>
   </div>
 
-  <p v-if="loading">Chargement en cours ...</p> 
-  <div v-else class="grille">
-    <p v-if=" erreur != '' ">{{erreur}}</p>
+  <div class="grille">
+
     <GameCard v-for="jeu in jeux" :key="jeu.id" :jeu="jeu" />
   </div>
 
   <button @click="chargerJeux()">More</button>
 </template>
+
 
 <style scoped>
 .grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
