@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { router } from '../router';
 import { useRoute } from 'vue-router'
 import { useFavorisStore } from '../stores/favoris';
@@ -14,12 +14,10 @@ defineProps({
   jeu: { type:Object, required: true}
 })
 
-const test = true
 
 </script>
 
 <template>
-  
   <div v-if="scoreMin <= jeu.metacritic"  class="carte">
     <router-link :to="`/jeu/${jeu.id}`">
       <div>

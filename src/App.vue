@@ -10,10 +10,15 @@ const route = useRoute()
 
 <template>
   <h1>  
-    <RouterLink to="/">GameDex</RouterLink>
+    <RouterLink to="/" class="title">GameDex</RouterLink>
   </h1>
 
   <main>
     <RouterView />
   </main>
 </template>
+
+<style scoped>
+.title {color: blueviolet ; size:  ;}
+
+</style>

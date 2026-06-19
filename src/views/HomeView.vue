@@ -33,9 +33,6 @@ const scoreMin = computed({
   }
 })
 
-onMounted(() => {
-  chargerJeux();
-})
 //---------------------------------------------------------------------------------
 async function chargerJeux() {
   loading.value = true
@@ -70,12 +67,20 @@ async function showSearchedGame() {
 }
 
 //------------------------------------------------------------------------------------
-
+onMounted(() => {
+  chargerJeux();
+})
 
 </script>
 
 <template>
   <div>
+    <input v-model.trim="search" maxlength="20" placeholder="search">
+
+    <div>
+      <label >Minimal score :</label>
+      <input type="number" v-model="scoreMin" min="0" max="100" value=""></input>
+    </div>
     <RouterLink to="/favoris">
       <p>{{ store.nombre }}</p>
     </RouterLink>
